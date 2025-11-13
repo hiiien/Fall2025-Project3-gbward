@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "CRc4FqR32wM=",
+  "success": true,
+  "projectFilePath": "/home/gavin/Work/School/Fall2025/WebDev/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj",
+  "expectedPackageFiles": [
+    "/home/gavin/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.9/microsoft.aspnetcore.app.ref.9.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}
