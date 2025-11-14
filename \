@@ -62,13 +62,6 @@ namespace Fall2025_Project3_gbward.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,ImdbLink,Genre,Year")] Movie movie, IFormFile? poster)
         {
-
-            bool movieExists = await _context.Movies.AnyAsync(m => m.Title == movie.Title && m.ImdbLink == movie.ImdbLink);
-            if (movieExists)
-            {
-                ModelState.AddModelError("Title", "Movie already exists");
-                return View(movie);
-            }
             if (poster != null && poster.Length > 0)
             {
                 using (var stream = new MemoryStream())
@@ -114,17 +107,20 @@ namespace Fall2025_Project3_gbward.Controllers
                 return NotFound();
             }
 
+            // Load from DB
             var existingMovie = await _context.Movies.FirstOrDefaultAsync(m => m.Id == id);
             if (existingMovie == null)
             {
                 return NotFound();
             }
 
+            // Copy editable properties
             existingMovie.Title = movie.Title;
             existingMovie.ImdbLink = movie.ImdbLink;
             existingMovie.Genre = movie.Genre;
             existingMovie.Year = movie.Year;
 
+            // Optional poster update
             if (poster != null && poster.Length > 0)
             {
                 using (var stream = new MemoryStream())
@@ -157,7 +153,6 @@ namespace Fall2025_Project3_gbward.Controllers
 
             return View(existingMovie);
         }
-
         // GET: Movies/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -184,9 +179,6 @@ namespace Fall2025_Project3_gbward.Controllers
             var movie = await _context.Movies.FindAsync(id);
             if (movie != null)
             {
-                var relationship = _context.MovieActors.Where(m => m.MovieId == id);
-                _context.MovieActors.RemoveRange(relationship);
-
                 _context.Movies.Remove(movie);
             }
 

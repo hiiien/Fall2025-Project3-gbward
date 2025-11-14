@@ -1,12 +1,19 @@
-namespace Fall2025_Project3_gbward.Models;
+using System.ComponentModel.DataAnnotations;
 
-public class MovieActor
+namespace Fall2025_Project3_gbward.Models
 {
-    public int Id { get; set; } // Optional, but useful for scaffolding
+    public class MovieActor
+    {
+        public int Id { get; set; }
 
-    public int MovieId { get; set; }
-    public Movie Movie { get; set; }
+        [Display(Name = "Movie")]
+        [Required(ErrorMessage = "Please select a movie")]
+        public int MovieId { get; set; }
+        public Movie Movie { get; set; } = null!;
 
-    public int ActorId { get; set; }
-    public Actor Actor { get; set; }
+        [Display(Name = "Actor")]
+        [Required(ErrorMessage = "Please select an actor")]
+        public int ActorId { get; set; }
+        public Actor Actor { get; set; } = null!;
+    }
 }
