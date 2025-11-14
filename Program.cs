@@ -3,7 +3,10 @@ using Fall2025_Project3_gbward.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddUserSecrets<Program>();
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
 
 var connectionString = builder.Configuration.GetConnectionString("AzureDb");
 
