@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,7 +16,10 @@ namespace Fall2025_Project3_gbward.ViewModels
         [Required(ErrorMessage = "Please select an actor.")]
         public int ActorId { get; set; }
 
+        [ValidateNever]
         public SelectList Movies { get; set; } = null!;
+
+        [ValidateNever]
         public SelectList Actors { get; set; } = null!;
     }
 }
