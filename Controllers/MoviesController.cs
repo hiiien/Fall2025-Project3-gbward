@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Fall2025_Project3_gbward.Data;
 using Fall2025_Project3_gbward.Models;
+using Fall2025_Project3_gbward.Services;
+using Fall2025_Project3_gbward.ViewModels;
+using VaderSharp2;
 
 namespace Fall2025_Project3_gbward.Controllers
 {
     public class MoviesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly AzureOpenAIService _aiService;
 
-        public MoviesController(ApplicationDbContext context)
+        public MoviesController(ApplicationDbContext context, AzureOpenAIService aiService)
         {
             _context = context;
+            _aiService = aiService;
         }
 
         // GET: Movies
@@ -37,16 +41,44 @@ namespace Fall2025_Project3_gbward.Controllers
             }
 
             var movie = await _context.Movies
-        .Include(m => m.MovieActors)
-        .ThenInclude(am => am.Actor)
-        .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(m => m.MovieActors)
+                .ThenInclude(am => am.Actor)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (movie == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            // Generate AI reviews
+            var reviewTexts = await _aiService.GenerateMovieReviewsAsync(movie.Title, 10);
+
+            // Analyze sentiment for each review
+            var analyzer = new SentimentIntensityAnalyzer();
+            var reviews = new List<ReviewSentiment>();
+
+            foreach (var reviewText in reviewTexts)
+            {
+                var results = analyzer.PolarityScores(reviewText);
+                var label = GetSentimentLabel(results.Compound);
+
+                reviews.Add(new ReviewSentiment
+                {
+                    Review = reviewText,
+                    CompoundScore = results.Compound,
+                    SentimentLabel = label
+                });
+            }
+
+            var viewModel = new MovieDetailsViewModel
+            {
+                Movie = movie,
+                Reviews = reviews,
+                AverageSentiment = reviews.Any() ? reviews.Average(r => r.CompoundScore) : 0,
+                SentimentLabel = GetSentimentLabel(reviews.Any() ? reviews.Average(r => r.CompoundScore) : 0)
+            };
+
+            return View(viewModel);
         }
 
         // GET: Movies/Create
@@ -56,19 +88,17 @@ namespace Fall2025_Project3_gbward.Controllers
         }
 
         // POST: Movies/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,ImdbLink,Genre,Year")] Movie movie, IFormFile? poster)
         {
-
             bool movieExists = await _context.Movies.AnyAsync(m => m.Title == movie.Title && m.ImdbLink == movie.ImdbLink);
             if (movieExists)
             {
                 ModelState.AddModelError("Title", "Movie already exists");
                 return View(movie);
             }
+
             if (poster != null && poster.Length > 0)
             {
                 using (var stream = new MemoryStream())
@@ -77,6 +107,7 @@ namespace Fall2025_Project3_gbward.Controllers
                     movie.Poster = stream.ToArray();
                 }
             }
+
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
@@ -103,8 +134,6 @@ namespace Fall2025_Project3_gbward.Controllers
         }
 
         // POST: Movies/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,ImdbLink,Genre,Year")] Movie movie, IFormFile? poster)
@@ -134,7 +163,6 @@ namespace Fall2025_Project3_gbward.Controllers
                 }
             }
 
-            // Prevent poster validation errors
             ModelState.Remove("Poster");
 
             if (ModelState.IsValid)
@@ -184,9 +212,8 @@ namespace Fall2025_Project3_gbward.Controllers
             var movie = await _context.Movies.FindAsync(id);
             if (movie != null)
             {
-                var relationship = _context.MovieActors.Where(m => m.MovieId == id);
-                _context.MovieActors.RemoveRange(relationship);
-
+                var relationships = _context.MovieActors.Where(m => m.MovieId == id);
+                _context.MovieActors.RemoveRange(relationships);
                 _context.Movies.Remove(movie);
             }
 
@@ -197,6 +224,16 @@ namespace Fall2025_Project3_gbward.Controllers
         private bool MovieExists(int id)
         {
             return _context.Movies.Any(e => e.Id == id);
+        }
+
+        private string GetSentimentLabel(double compound)
+        {
+            if (compound >= 0.05)
+                return "Positive";
+            else if (compound <= -0.05)
+                return "Negative";
+            else
+                return "Neutral";
         }
     }
 }

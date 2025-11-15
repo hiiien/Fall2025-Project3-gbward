@@ -5,7 +5,7 @@ namespace Fall2025_Project3_gbward.ViewModels
 {
     public class CreateMovieActorViewModel
     {
-        public int Id { get; set; }  // Used for Edit scenario
+        public int Id { get; set; }
 
         [Display(Name = "Movie")]
         [Required(ErrorMessage = "Please select a movie.")]
@@ -15,8 +15,7 @@ namespace Fall2025_Project3_gbward.ViewModels
         [Required(ErrorMessage = "Please select an actor.")]
         public int ActorId { get; set; }
 
-        // For dropdown lists
-        public SelectList Movies { get; set; }
-        public SelectList Actors { get; set; }
+        public SelectList Movies { get; set; } = null!;
+        public SelectList Actors { get; set; } = null!;
     }
 }

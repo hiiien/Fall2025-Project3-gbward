@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/gavin/Work/School/Fall2025/WebDev/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj": {}
+    "/home/gavin/classes/cs330/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj": {}
   },
   "projects": {
-    "/home/gavin/Work/School/Fall2025/WebDev/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj": {
+    "/home/gavin/classes/cs330/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/gavin/Work/School/Fall2025/WebDev/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj",
+        "projectUniqueName": "/home/gavin/classes/cs330/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj",
         "projectName": "Fall2025-Project3-gbward",
-        "projectPath": "/home/gavin/Work/School/Fall2025/WebDev/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj",
+        "projectPath": "/home/gavin/classes/cs330/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj",
         "packagesPath": "/home/gavin/.nuget/packages/",
-        "outputPath": "/home/gavin/Work/School/Fall2025/WebDev/Fall2025-Project3-gbward/obj/",
+        "outputPath": "/home/gavin/classes/cs330/Fall2025-Project3-gbward/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/gavin/.nuget/NuGet/NuGet.Config"
@@ -44,6 +44,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Azure.AI.OpenAI": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.8, )"
@@ -71,6 +75,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[8.0.1, )"
+            },
+            "VaderSharp2": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             }
           },
           "imports": [
@@ -91,6 +99,10 @@
             },
             {
               "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[8.0.20, 8.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
               "version": "[8.0.20, 8.0.20]"
             }
           ],

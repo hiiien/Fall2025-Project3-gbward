@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Fall2025_Project3_gbward.Data;
+using Fall2025_Project3_gbward.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,9 @@ var connectionString = builder.Configuration.GetConnectionString("AzureDb");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// Register the Azure OpenAI service
+builder.Services.AddSingleton<AzureOpenAIService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -24,7 +28,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();   // ✔ .NET 8 static assets
+app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthorization();

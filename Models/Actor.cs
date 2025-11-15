@@ -7,7 +7,7 @@ public class Actor
     public int Id { get; set; }
 
     [Required]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;  // Added = string.Empty
 
     public string? Gender { get; set; }
 
@@ -16,10 +16,8 @@ public class Actor
     [Url]
     public string? ImdbLink { get; set; }
 
-    // Actor photo stored as byte[]
     public byte[]? Photo { get; set; }
 
-    // Navigation
-    public ICollection<MovieActor> MovieActors { get; set; } = new List<MovieActor>();
+    // Changed from MovieActors to ActorMovies
+    public ICollection<MovieActor> ActorMovies { get; set; } = new List<MovieActor>();
 }
-

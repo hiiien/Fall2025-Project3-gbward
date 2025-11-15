@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "5d8+Ax584S0=",
+  "dgSpecHash": "vEacWWO7aTA=",
   "success": true,
-  "projectFilePath": "/home/gavin/Work/School/Fall2025/WebDev/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj",
+  "projectFilePath": "/home/gavin/classes/cs330/Fall2025-Project3-gbward/Fall2025-Project3-gbward.csproj",
   "expectedPackageFiles": [
-    "/home/gavin/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
+    "/home/gavin/.nuget/packages/azure.ai.openai/2.1.0/azure.ai.openai.2.1.0.nupkg.sha512",
+    "/home/gavin/.nuget/packages/azure.core/1.44.1/azure.core.1.44.1.nupkg.sha512",
     "/home/gavin/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
     "/home/gavin/.nuget/packages/humanizer/2.14.1/humanizer.2.14.1.nupkg.sha512",
     "/home/gavin/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
@@ -124,6 +125,8 @@
     "/home/gavin/.nuget/packages/nuget.projectmodel/6.3.1/nuget.projectmodel.6.3.1.nupkg.sha512",
     "/home/gavin/.nuget/packages/nuget.protocol/6.3.1/nuget.protocol.6.3.1.nupkg.sha512",
     "/home/gavin/.nuget/packages/nuget.versioning/6.3.1/nuget.versioning.6.3.1.nupkg.sha512",
+    "/home/gavin/.nuget/packages/openai/2.1.0/openai.2.1.0.nupkg.sha512",
+    "/home/gavin/.nuget/packages/system.clientmodel/1.2.1/system.clientmodel.1.2.1.nupkg.sha512",
     "/home/gavin/.nuget/packages/system.codedom/5.0.0/system.codedom.5.0.0.nupkg.sha512",
     "/home/gavin/.nuget/packages/system.collections.immutable/7.0.0/system.collections.immutable.7.0.0.nupkg.sha512",
     "/home/gavin/.nuget/packages/system.composition/7.0.0/system.composition.7.0.0.nupkg.sha512",
@@ -142,7 +145,7 @@
     "/home/gavin/.nuget/packages/system.io.filesystem.accesscontrol/5.0.0/system.io.filesystem.accesscontrol.5.0.0.nupkg.sha512",
     "/home/gavin/.nuget/packages/system.io.pipelines/7.0.0/system.io.pipelines.7.0.0.nupkg.sha512",
     "/home/gavin/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
-    "/home/gavin/.nuget/packages/system.memory.data/1.0.2/system.memory.data.1.0.2.nupkg.sha512",
+    "/home/gavin/.nuget/packages/system.memory.data/6.0.0/system.memory.data.6.0.0.nupkg.sha512",
     "/home/gavin/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
     "/home/gavin/.nuget/packages/system.reflection.metadata/7.0.0/system.reflection.metadata.7.0.0.nupkg.sha512",
     "/home/gavin/.nuget/packages/system.reflection.metadataloadcontext/7.0.0/system.reflection.metadataloadcontext.7.0.0.nupkg.sha512",
@@ -163,8 +166,21 @@
     "/home/gavin/.nuget/packages/system.threading.tasks.dataflow/7.0.0/system.threading.tasks.dataflow.7.0.0.nupkg.sha512",
     "/home/gavin/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "/home/gavin/.nuget/packages/system.windows.extensions/7.0.0/system.windows.extensions.7.0.0.nupkg.sha512",
+    "/home/gavin/.nuget/packages/vadersharp2/3.3.2/vadersharp2.3.3.2.nupkg.sha512",
     "/home/gavin/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.20/microsoft.aspnetcore.app.ref.8.0.20.nupkg.sha512",
-    "/home/gavin/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.20/microsoft.netcore.app.host.linux-x64.8.0.20.nupkg.sha512"
+    "/home/gavin/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.20/microsoft.netcore.app.host.linux-x64.8.0.20.nupkg.sha512",
+    "/home/gavin/.nuget/packages/microsoft.netcore.app.ref/8.0.20/microsoft.netcore.app.ref.8.0.20.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Fall2025-Project3-gbward depends on VaderSharp2 (>= 2.2.0) but VaderSharp2 2.2.0 was not found. VaderSharp2 3.3.2 was resolved instead.",
+      "libraryId": "VaderSharp2",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

@@ -1,54 +1,65 @@
 @model Fall2025_Project3_gbward.Models.Movie
 
 @{
-    ViewData["Title"] = "Edit";
+ViewData["Title"] = "Edit Movie";
 }
 
-<h1>Edit</h1>
+<h1>Edit Movie</h1>
 
-<h4>Movie</h4>
+<h4>Edit Movie Details</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImdbLink" class="control-label"></label>
-                <input asp-for="ImdbLink" class="form-control" />
-                <span asp-validation-for="ImdbLink" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Genre" class="control-label"></label>
-                <input asp-for="Genre" class="form-control" />
-                <span asp-validation-for="Genre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Year" class="control-label"></label>
-                <input asp-for="Year" class="form-control" />
-                <span asp-validation-for="Year" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Poster" class="control-label"></label>
-                <input asp-for="Poster" class="form-control" />
-                <span asp-validation-for="Poster" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+	<div class="col-md-6">
+		<form asp-action="Edit" method="post" enctype="multipart/form-data">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="Id" />
 
-<div>
-    <a asp-action="Index">Back to List</a>
+			<div class="form-group mb-3">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+
+			<div class="form-group mb-3">
+				<label asp-for="ImdbLink" class="control-label">IMDB Link</label>
+				<input asp-for="ImdbLink" class="form-control" type="url" />
+				<span asp-validation-for="ImdbLink" class="text-danger"></span>
+			</div>
+
+			<div class="form-group mb-3">
+				<label asp-for="Genre" class="control-label"></label>
+				<input asp-for="Genre" class="form-control" />
+				<span asp-validation-for="Genre" class="text-danger"></span>
+			</div>
+
+			<div class="form-group mb-3">
+				<label asp-for="Year" class="control-label"></label>
+				<input asp-for="Year" class="form-control" />
+				<span asp-validation-for="Year" class="text-danger"></span>
+			</div>
+
+			@if (Model.Poster != null && Model.Poster.Length > 0)
+			{
+			<div class="form-group mb-3">
+				<label>Current Poster</label><br />
+				<img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Poster)"
+					alt="Movie Poster" style="max-width: 200px; max-height: 300px;" />
+			</div>
+			}
+
+			<div class="form-group mb-3">
+				<label for="poster" class="control-label">Upload New Poster (optional)</label>
+				<input type="file" name="poster" id="poster" class="form-control" accept="image/*" />
+			</div>
+
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+				<a asp-action="Index" class="btn btn-secondary">Back to List</a>
+			</div>
+		</form>
+	</div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

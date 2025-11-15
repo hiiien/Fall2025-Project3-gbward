@@ -7,7 +7,7 @@ public class Movie
     public int Id { get; set; }
 
     [Required]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;  // Added = string.Empty
 
     [Url]
     public string? ImdbLink { get; set; }
@@ -16,9 +16,7 @@ public class Movie
 
     public string? Year { get; set; }
 
-    // Poster stored as byte[]
     public byte[]? Poster { get; set; }
 
-    // Navigation
     public ICollection<MovieActor> MovieActors { get; set; } = new List<MovieActor>();
 }
