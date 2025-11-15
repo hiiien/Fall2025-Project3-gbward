@@ -27,7 +27,7 @@ namespace Fall2025_Project3_gbward.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Actors
-                .Include(a => a.MovieActors)
+                .Include(a => a.ActorMovies)
                 .ThenInclude(am => am.Movie)
                 .ToListAsync());
         }
@@ -41,9 +41,10 @@ namespace Fall2025_Project3_gbward.Controllers
             }
 
             var actor = await _context.Actors
-                .Include(a => a.MovieActors)
+                .Include(a => a.ActorMovies)
                 .ThenInclude(am => am.Movie)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            
             if (actor == null)
             {
                 return NotFound();
@@ -99,6 +100,7 @@ namespace Fall2025_Project3_gbward.Controllers
                     actor.Photo = ms.ToArray();
                 }
             }
+            
             if (ModelState.IsValid)
             {
                 _context.Add(actor);
