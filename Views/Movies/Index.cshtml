@@ -1,59 +1,76 @@
 @model IEnumerable<Fall2025_Project3_gbward.Models.Movie>
 
-@{
-    ViewData["Title"] = "Index";
-}
+	@{
+	ViewData["Title"] = "Movies";
+	}
 
-<h1>Index</h1>
+	<h1>Movie Collection</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImdbLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Poster)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImdbLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Poster)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+	<p>
+		<a asp-action="Create" class="btn btn-primary">
+			<i class="bi bi-plus-circle"></i> Add New Movie
+		</a>
+	</p>
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Poster</th>
+				<th>Title</th>
+				<th>Genre</th>
+				<th>Year</th>
+				<th>IMDB</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model) {
+			<tr>
+				<td>
+					@if (item.Poster != null && item.Poster.Length > 0)
+					{
+					<img src="data:image/jpeg;base64,@Convert.ToBase64String(item.Poster)"
+						alt="@item.Title Poster" class="movie-poster"
+						style="width: 60px; height: 90px; object-fit: cover;" />
+					}
+					else
+					{
+					<div
+						style="width: 60px; height: 90px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+						<span style="font-size: 10px;">No Image</span>
+					</div>
+					}
+				</td>
+				<td>
+					<strong>@Html.DisplayFor(modelItem => item.Title)</strong>
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Genre)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Year)
+				</td>
+				<td>
+					@if (!string.IsNullOrEmpty(item.ImdbLink))
+					{
+					<a href="@item.ImdbLink" target="_blank" class="btn btn-sm btn-secondary">
+						<i class="bi bi-link-45deg"></i> IMDB
+					</a>
+					}
+					else
+					{
+					<span>N/A</span>
+					}
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.Id"
+						class="btn btn-sm btn-primary">Edit</a>
+					<a asp-action="Details" asp-route-id="@item.Id"
+						class="btn btn-sm btn-secondary">Details</a>
+					<a asp-action="Delete" asp-route-id="@item.Id"
+						class="btn btn-sm btn-danger">Delete</a>
+				</td>
+			</tr>
+			}
+		</tbody>
+	</table>

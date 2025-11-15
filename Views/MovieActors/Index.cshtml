@@ -1,41 +1,51 @@
 @model IEnumerable<Fall2025_Project3_gbward.Models.MovieActor>
 
-@{
-    ViewData["Title"] = "Index";
-}
+	@{
+	ViewData["Title"] = "Movie-Actor Relationships";
+	}
 
-<h1>Index</h1>
+	<h1>Movie-Actor Relationships</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Movie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Actor)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Movie.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Actor.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+	<p>
+		<a asp-action="Create" class="btn btn-primary">
+			<i class="bi bi-plus-circle"></i> Create New Relationship
+		</a>
+	</p>
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>
+					<i class="bi bi-film"></i> Movie
+				</th>
+				<th>
+					<i class="bi bi-star"></i> Actor
+				</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model) {
+			<tr>
+				<td>
+					<strong>@Html.DisplayFor(modelItem => item.Movie.Title)</strong>
+					@if (!string.IsNullOrEmpty(item.Movie.Year))
+					{
+					<span class="badge bg-secondary">@item.Movie.Year</span>
+					}
+				</td>
+				<td>
+					<strong>@Html.DisplayFor(modelItem => item.Actor.Name)</strong>
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.Id"
+						class="btn btn-sm btn-primary">Edit</a>
+					<a asp-action="Details" asp-route-id="@item.Id"
+						class="btn btn-sm btn-secondary">Details</a>
+					<a asp-action="Delete" asp-route-id="@item.Id"
+						class="btn btn-sm btn-danger">Delete</a>
+				</td>
+			</tr>
+			}
+		</tbody>
+	</table>

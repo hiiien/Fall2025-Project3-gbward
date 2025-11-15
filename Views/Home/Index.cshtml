@@ -1,8 +1,92 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center" style="padding: 40px 20px;">
+	<h1 class="display-3" style="color: #FDB913; text-shadow: 3px 3px 6px rgba(0,0,0,0.7); margin-bottom: 30px;">
+		Welcome to Classic Video Rentals
+	</h1>
+
+	<p class="lead" style="font-size: 1.3rem; margin-bottom: 40px;">
+		Your one-stop destination for managing movies, actors, and entertainment!
+	</p>
+
+	<div class="row mt-5">
+		<div class="col-md-4 mb-4">
+			<div class="details-card text-center" style="height: 100%;">
+				<div style="font-size: 4rem; margin-bottom: 20px;">🎥</div>
+				<h3>Browse Movies</h3>
+				<p>Explore our extensive collection of films from all genres and eras.</p>
+				<a asp-controller="Movies" asp-action="Index" class="btn btn-primary">
+					<i class="bi bi-film"></i> View Movies
+				</a>
+			</div>
+		</div>
+
+		<div class="col-md-4 mb-4">
+			<div class="details-card text-center" style="height: 100%;">
+				<div style="font-size: 4rem; margin-bottom: 20px;">⭐</div>
+				<h3>Discover Actors</h3>
+				<p>Learn about your favorite actors and their filmography.</p>
+				<a asp-controller="Actors" asp-action="Index" class="btn btn-primary">
+					<i class="bi bi-star"></i> View Actors
+				</a>
+			</div>
+		</div>
+
+		<div class="col-md-4 mb-4">
+			<div class="details-card text-center" style="height: 100%;">
+				<div style="font-size: 4rem; margin-bottom: 20px;">🔗</div>
+				<h3>Movie Connections</h3>
+				<p>See which actors starred in which movies and create connections.</p>
+				<a asp-controller="MovieActors" asp-action="Index" class="btn btn-primary">
+					<i class="bi bi-link-45deg"></i> View Relationships
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="row mt-5">
+		<div class="col-12">
+			<div class="details-card">
+				<h3 style="color: #FDB913; margin-bottom: 20px;">
+					<i class="bi bi-info-circle"></i> Features
+				</h3>
+				<div class="row">
+					<div class="col-md-6">
+						<ul class="text-start" style="line-height: 2;">
+							<li><i class="bi bi-check-circle" style="color: #FDB913;"></i>
+								AI-Powered Movie Reviews</li>
+							<li><i class="bi bi-check-circle" style="color: #FDB913;"></i>
+								Sentiment Analysis</li>
+							<li><i class="bi bi-check-circle" style="color: #FDB913;"></i>
+								Actor Social Media Insights</li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<ul class="text-start" style="line-height: 2;">
+							<li><i class="bi bi-check-circle" style="color: #FDB913;"></i>
+								Image Upload Support</li>
+							<li><i class="bi bi-check-circle" style="color: #FDB913;"></i>
+								IMDB Integration</li>
+							<li><i class="bi bi-check-circle" style="color: #FDB913;"></i>
+								Comprehensive Database</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="mt-5"
+		style="padding: 30px; background: rgba(253, 185, 19, 0.1); border-radius: 15px; border: 2px solid rgba(253, 185, 19, 0.3);">
+		<h4 style="color: #FDB913;">🎉 Get Started Today!</h4>
+		<p>Add your favorite movies and actors to build your personal entertainment database.</p>
+		<a asp-controller="Movies" asp-action="Create" class="btn btn-primary me-2">
+			<i class="bi bi-plus-circle"></i> Add Movie
+		</a>
+		<a asp-controller="Actors" asp-action="Create" class="btn btn-primary">
+			<i class="bi bi-plus-circle"></i> Add Actor
+		</a>
+	</div>
 </div>
