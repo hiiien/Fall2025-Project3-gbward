@@ -22,7 +22,11 @@ namespace Fall2025_Project3_gbward.Controllers
         // GET: Actors
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Actors.ToListAsync());
+            return View(await _context.Actors
+                .Include(a => a.ActorMovies)
+                .ThenInclude(am => am.Movie)
+                .ToListAsync());
+
         }
 
         // GET: Actors/Details/5
@@ -34,6 +38,8 @@ namespace Fall2025_Project3_gbward.Controllers
             }
 
             var actor = await _context.Actors
+            .Include(a => a.ActorMovies)
+            .ThenInclude(am => am.Movie)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (actor == null)
             {
@@ -54,8 +60,16 @@ namespace Fall2025_Project3_gbward.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Gender,Age,ImdbLink,Photo")] Actor actor)
+        public async Task<IActionResult> Create([Bind("Id,Name,Gender,Age,ImdbLink")] Actor actor, IFormFile photo)
         {
+            if (photo != null && photo.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    await photo.CopyToAsync(ms);
+                    actor.Photo = ms.ToArray();
+                }
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(actor);
@@ -93,11 +107,30 @@ namespace Fall2025_Project3_gbward.Controllers
                 return NotFound();
             }
 
+            var existingActor = await _context.Actors.FirstOrDefaultAsync(id);
+            if (existingActor != null)
+            {
+                existingActor.Name = actor.Name;
+                existingActor.Gender = actor.Gender;
+                existingActor.Age = actor.Age;
+                existingActor.ImdbLink = actor.ImdbLink;
+            }
+            if (photo != null && photo.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    await photo.CopyToAsync(ms);
+                    actor.Photo = ms.ToArray();
+                }
+            }
+
+            ModelState.Remove("Photo");
+            ModelState.Remove(existing.Photo);
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(actor);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -142,6 +175,9 @@ namespace Fall2025_Project3_gbward.Controllers
             var actor = await _context.Actors.FindAsync(id);
             if (actor != null)
             {
+                var relationship = _context.MovieActors.Where(m => m.ActorId == id);
+                _context.MovieActors.RemoveRange(relationship);
+
                 _context.Actors.Remove(actor);
             }
 
